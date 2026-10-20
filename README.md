@@ -1,5 +1,4 @@
 # 🕊️ Feathers of Fate
-### Plumas del Destino
 
 **Feathers of Fate** es un videojuego web de aventura narrativa interactiva basado en decisiones, desarrollado como parte del Proyecto Integrador de Funcionamiento de los Sistemas Digitales y Producción Multimedial.
 
