@@ -141,17 +141,6 @@ Los aliados conseguidos durante la aventura podrán participar en esta escena.
 
 La decisión elegida y el **Honor total**, incluyendo los puntos de la última decisión, determinarán el desenlace.
 
-## 🏆 Finales posibles
-
-El juego contará con cuatro finales principales.
-
-| Final | Condición |
-|---|---|
-| **Final 1: Un hogar para todos** | Salvar al pájaro (A o C) y terminar con Honor alto (+2 o más). |
-| **Final 2: Una segunda oportunidad** | Salvar al pájaro (A o C) y terminar con Honor medio o bajo (+1 o menos). |
-| **Final 3: Un hogar vacío** | Abandonar al pájaro (B) y terminar con Honor medio o alto (−1 o más). |
-| **Final 4: El karma de la paloma** | Abandonar al pájaro (B) y terminar con Honor bajo (−2 o menos). |
-
 ### Cálculo del desenlace
 
 El Honor final se obtendrá sumando el Honor acumulado durante la aventura y los puntos correspondientes a la última decisión.
@@ -230,8 +219,6 @@ Todos los integrantes colaborarán en las distintas áreas del proyecto, aunque 
 
 ## 🚧 Estado del proyecto
 
-**Sprint 2: Preproducción y estructura.**
+**Sprint 4: Trabajando en una versión avanzada jugable.**
 
-Actualmente, el equipo ya planificó la estructura narrativa, el diseño visual, las pantallas y las funcionalidades del videojuego.
-
-Durante las próximas etapas se comenzará con el desarrollo de la aplicación web, la implementación de las decisiones y la integración de los recursos gráficos y sonoros.
+Las primeras versiones funcionales ya están listas, con mockups y orden de decisiones listos. Estamos trabajando principalmente en animaciones, imágenes y correcciones de código.  
