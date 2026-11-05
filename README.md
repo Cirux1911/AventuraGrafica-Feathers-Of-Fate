@@ -190,12 +190,12 @@ Feathers-of-Fate/
 │   └── styles.css
 │
 ├── JS/
-│   └── main.js
+│   ├── main.js
+│   └── story.js
 │
 └── ASSETS/
-    ├── images/
-    ├── audio/
-    └── fonts/
+    ├── animaciones/
+    └── img/
 ```
 
 Esta estructura es una propuesta inicial y podrá modificarse durante el desarrollo.
