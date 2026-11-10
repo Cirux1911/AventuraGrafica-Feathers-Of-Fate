@@ -211,9 +211,9 @@ Esta estructura es una propuesta inicial y podrá modificarse durante el desarro
 | Integrante | Responsabilidad principal |
 |---|---|
 | Ciro Griffa | Líder del proyecto |
-| Tomás Cardozo | Diseño |
+| Tomás Cardozo | Diseño visual y sonoro |
 | Ramiro Herrera | Programación |
-| Iván Radoeff | Música y sonido |
+| Iván Radoeff | Diseño visual y sonoro |
 
 Todos los integrantes colaborarán en las distintas áreas del proyecto, aunque cada uno tendrá una responsabilidad principal.
 
