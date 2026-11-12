@@ -51,7 +51,15 @@
   let timer = null;
 
   let decisionTimer = null;
-  const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
+  const TIEMPOS_NODOS = [20, 25, 15, 30, 30];
+
+function tiempoDecision() {
+  if (state.escenaActual === 6) {
+    return 10 + allies().length * 5;
+  }
+
+  return TIEMPOS_NODOS[state.escenaActual - 1];
+}
 
   // Elementos compartidos por las pantallas.
   function imageMarkup(src, alt, className = 'art-image') {
@@ -153,7 +161,7 @@
     ${imageMarkup(data.imagenes[scene.imagen], scene.titulo)}
 
     <div class="decision-clock">
-      Tiempo: <span id="segundos-restantes">${TIEMPOS_NODOS[state.escenaActual - 1]}</span>s
+      Tiempo: <span id="segundos-restantes">${tiempoDecision()}</span>s
     </div>
 
     <div class="choices">${choiceButtons(scene)}</div>
@@ -301,7 +309,7 @@
 
 
     if (state.fase === 'scene') {
-      let segundos = TIEMPOS_NODOS[state.escenaActual - 1];
+      let segundos = tiempoDecision();
       const contador = app.querySelector('#segundos-restantes');
 
       decisionTimer = setInterval(() => {
