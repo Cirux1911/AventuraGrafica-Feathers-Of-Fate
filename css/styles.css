@@ -546,3 +546,7 @@ button:disabled {
     animation-timing-function: steps(1, end);
   }
 }
+
+.loading-board .art-image {
+  object-fit: contain;
+}

@@ -39,13 +39,9 @@ window.FOF_DATA = {
     duracionMs: 3000,
   },
   loading: {
-    texto: 'Volando hacia el próximo nodo...',
-    variantes: {
-      ninguno: './assets/img/loadingpaloma.png', mosca: './assets/img/loadingmosca.png', gato: './assets/img/loadinggato.png', pajaritos: './assets/img/loadingpajaritos.png',
-      'mosca-gato': './assets/img/loadingmoscagato.png', 'mosca-pajaritos': './assets/img/loadingmoscapajaritos.png', 'gato-pajaritos': './assets/img/loadinggatopajaritos.png',
-      'mosca-gato-pajaritos': './assets/img/loadingmoscagatopajaritos.png'
-    }
-  },
+  texto: 'Volando hacia el próximo nodo...',
+  carpeta: './assets/img/cargas'
+},
   escenas: [
     {
       numero: 1,
