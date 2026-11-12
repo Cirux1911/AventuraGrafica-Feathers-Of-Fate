@@ -211,11 +211,16 @@
       </div>`);
   }
 
-  function renderLoading() {
-    return screen('loading-board', `
-      ${imageMarkup(variantImage(data.imagenes.loading, data.loading.variantes), 'Paloma volando hacia el siguiente nodo')}
-      <div class="loading-note">${escapeHTML(data.loading.texto)}</div>`);
-  }
+
+function renderLoading() {
+  const nombreImagen = `${honorIconState(state.honor)}-${alliesKey()}.png`;
+  const rutaImagen = `${data.loading.carpeta}/${nombreImagen}`;
+
+  return screen('loading-board', `
+    ${imageMarkup(rutaImagen, 'Paloma y aliados viajando hacia el siguiente nodo')}
+    <div class="loading-note">${escapeHTML(data.loading.texto)}</div>`);
+}
+
 
   function finalKey() {
     if (state.decisionFinal !== 'B') return state.honor >= 2 ? 'final1' : 'final2';
@@ -249,7 +254,7 @@
       timer = setTimeout(() => {
         state.fase = 'scene';
         render();
-      }, 1800);
+      }, 3500);
     }
   }
 
