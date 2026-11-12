@@ -121,6 +121,10 @@
       <source src="./assets/animaciones/intro.mp4" type="video/mp4">
     </video>
 
+<button class="skip-intro-btn" data-action="skip-intro">
+  Saltar introducción »
+</button>
+
 <button class="play-intro-btn" hidden data-action="play-intro">
   ▶ Reproducir introducción
 </button>
@@ -282,8 +286,9 @@
       const reproducir = app.querySelector('.play-intro-btn');
 
       video.addEventListener('ended', () => {
-        boton.hidden = false;
-      });
+  boton.hidden = false;
+  app.querySelector('.skip-intro-btn').hidden = true;
+});
 
       video.addEventListener('error', () => {
         boton.hidden = false;
@@ -388,6 +393,10 @@
         app.querySelector('.intro-video').play();
         action.hidden = true;
         break;
+        case 'skip-intro':
+  app.querySelector('.intro-video').pause();
+  enterFirstScene();
+  break;
       case 'enter-scene':
         enterFirstScene();
         break;
