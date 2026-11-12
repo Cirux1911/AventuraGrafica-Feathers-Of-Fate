@@ -50,6 +50,9 @@
   let state = newGame();
   let timer = null;
 
+let decisionTimer = null;
+const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
+
   // Elementos compartidos por las pantallas.
   function imageMarkup(src, alt, className = 'art-image') {
     return src ? `<img class="${className}" src="${escapeHTML(src)}" alt="${escapeHTML(alt)}">` : '';
@@ -128,12 +131,19 @@
     }).join('');
   }
 
-  function renderScene() {
-    const scene = currentScene();
-    return screen('scene-board', `
-      ${imageMarkup(data.imagenes[scene.imagen], scene.titulo)}
-      <div class="choices">${choiceButtons(scene)}</div>`, scene.titulo);
-  }
+ function renderScene() {
+  const scene = currentScene();
+
+  return screen('scene-board', `
+    ${imageMarkup(data.imagenes[scene.imagen], scene.titulo)}
+
+    <div class="decision-clock">
+      Tiempo: <span id="segundos-restantes">${TIEMPOS_NODOS[state.escenaActual - 1]}</span>s
+    </div>
+
+    <div class="choices">${choiceButtons(scene)}</div>
+  `, scene.titulo);
+}
 
   function honorIconState(value) {
     if (value <= HONOR_METER.badMax) return 'bad';
@@ -245,18 +255,39 @@ function renderLoading() {
   };
 
   // Navegación y temporizadores.
-  function render() {
-    clearTimeout(timer);
-    timer = null;
-    app.innerHTML = screens[state.fase]();
 
-    if (state.fase === 'loading') {
-      timer = setTimeout(() => {
-        state.fase = 'scene';
-        render();
-      }, 3500);
-    }
+function render() {
+  clearTimeout(timer);
+  clearInterval(decisionTimer);
+  timer = null;
+  decisionTimer = null;
+
+  app.innerHTML = screens[state.fase]();
+
+  if (state.fase === 'scene') {
+    let segundos = TIEMPOS_NODOS[state.escenaActual - 1];
+    const contador = app.querySelector('#segundos-restantes');
+
+    decisionTimer = setInterval(() => {
+      segundos--;
+      contador.textContent = segundos;
+
+      if (segundos <= 0) {
+        clearInterval(decisionTimer);
+        decisionTimer = null;
+        chooseOption('B');
+      }
+    }, 1000);
   }
+
+  if (state.fase === 'loading') {
+    timer = setTimeout(() => {
+      state.fase = 'scene';
+      render();
+    }, 3500);
+  }
+}
+
 
   function resetGame() {
     state = newGame();
