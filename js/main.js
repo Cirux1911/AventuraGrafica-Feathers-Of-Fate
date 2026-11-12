@@ -51,7 +51,7 @@
   let timer = null;
 
   let decisionTimer = null;
-  const TIEMPOS_NODOS = [20, 25, 15, 30, 30];
+  const TIEMPOS_NODOS = [15, 20, 15, 30, 30];
 
 function tiempoDecision() {
   if (state.escenaActual === 6) {
