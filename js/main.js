@@ -50,8 +50,8 @@
   let state = newGame();
   let timer = null;
 
-let decisionTimer = null;
-const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
+  let decisionTimer = null;
+  const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
 
   // Elementos compartidos por las pantallas.
   function imageMarkup(src, alt, className = 'art-image') {
@@ -89,8 +89,8 @@ const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
     return `
       <div class="animate-slot">
         ${/\.(mp4|webm|ogg)$/i.test(src)
-          ? `<video src="${src}" autoplay muted playsinline></video>`
-          : `<img src="${src}" alt="Animación de la paloma">`}
+        ? `<video src="${src}" autoplay muted playsinline></video>`
+        : `<img src="${src}" alt="Animación de la paloma">`}
       </div>`;
   }
 
@@ -113,13 +113,24 @@ const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
       ${state.menuFlying ? animationMarkup('inicio') : ''}`);
   }
 
+
   function renderIntro() {
     return screen('intro-board', `
-      ${imageMarkup(data.imagenes.introduccion, 'Introducción de Feathers of Fate')}
-      ${animationMarkup('introduccion')}
-      <div class="intro-btn-wrap"><button class="intro-btn" data-action="enter-scene">Comenzar</button></div>`,
-    'El hogar que se perdió');
+   <video class="intro-video" autoplay playsinline preload="auto"
+      poster="${escapeHTML(data.imagenes.introduccion)}">
+      <source src="./assets/animaciones/intro.mp4" type="video/mp4">
+    </video>
+
+<button class="play-intro-btn" hidden data-action="play-intro">
+  ▶ Reproducir introducción
+</button>
+
+    <div class="intro-btn-wrap" hidden>
+      <button class="intro-btn" data-action="enter-scene">Comenzar</button>
+    </div>`,
+      'El hogar que se perdió');
   }
+
 
   function choiceButtons(scene) {
     return scene.opciones.map(option => {
@@ -131,10 +142,10 @@ const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
     }).join('');
   }
 
- function renderScene() {
-  const scene = currentScene();
+  function renderScene() {
+    const scene = currentScene();
 
-  return screen('scene-board', `
+    return screen('scene-board', `
     ${imageMarkup(data.imagenes[scene.imagen], scene.titulo)}
 
     <div class="decision-clock">
@@ -143,7 +154,7 @@ const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
 
     <div class="choices">${choiceButtons(scene)}</div>
   `, scene.titulo);
-}
+  }
 
   function honorIconState(value) {
     if (value <= HONOR_METER.badMax) return 'bad';
@@ -222,14 +233,14 @@ const TIEMPOS_NODOS = [20, 25, 15, 30, 30, 15];
   }
 
 
-function renderLoading() {
-  const nombreImagen = `${honorIconState(state.honor)}-${alliesKey()}.png`;
-  const rutaImagen = `${data.loading.carpeta}/${nombreImagen}`;
+  function renderLoading() {
+    const nombreImagen = `${honorIconState(state.honor)}-${alliesKey()}.png`;
+    const rutaImagen = `${data.loading.carpeta}/${nombreImagen}`;
 
-  return screen('loading-board', `
+    return screen('loading-board', `
     ${imageMarkup(rutaImagen, 'Paloma y aliados viajando hacia el siguiente nodo')}
     <div class="loading-note">${escapeHTML(data.loading.texto)}</div>`);
-}
+  }
 
 
   function finalKey() {
@@ -242,7 +253,7 @@ function renderLoading() {
     return screen('final-board', `
       ${imageMarkup(variantImage(data.imagenes[ending.imagen], ending.variantes), ending.titulo)}
       <div class="final-actions"><button class="replay-btn" data-action="replay">Volver a jugar</button></div>`,
-    ending.titulo);
+      ending.titulo);
   }
 
   const screens = {
@@ -256,37 +267,57 @@ function renderLoading() {
 
   // Navegación y temporizadores.
 
-function render() {
-  clearTimeout(timer);
-  clearInterval(decisionTimer);
-  timer = null;
-  decisionTimer = null;
+  function render() {
+    clearTimeout(timer);
+    clearInterval(decisionTimer);
+    timer = null;
+    decisionTimer = null;
 
-  app.innerHTML = screens[state.fase]();
+    app.innerHTML = screens[state.fase]();
 
-  if (state.fase === 'scene') {
-    let segundos = TIEMPOS_NODOS[state.escenaActual - 1];
-    const contador = app.querySelector('#segundos-restantes');
 
-    decisionTimer = setInterval(() => {
-      segundos--;
-      contador.textContent = segundos;
+    if (state.fase === 'intro') {
+      const video = app.querySelector('.intro-video');
+      const boton = app.querySelector('.intro-btn-wrap');
+      const reproducir = app.querySelector('.play-intro-btn');
 
-      if (segundos <= 0) {
-        clearInterval(decisionTimer);
-        decisionTimer = null;
-        chooseOption('B');
-      }
-    }, 1000);
+      video.addEventListener('ended', () => {
+        boton.hidden = false;
+      });
+
+      video.addEventListener('error', () => {
+        boton.hidden = false;
+      });
+
+      video.play().catch(() => {
+        reproducir.hidden = false;
+      });
+    }
+
+
+    if (state.fase === 'scene') {
+      let segundos = TIEMPOS_NODOS[state.escenaActual - 1];
+      const contador = app.querySelector('#segundos-restantes');
+
+      decisionTimer = setInterval(() => {
+        segundos--;
+        contador.textContent = segundos;
+
+        if (segundos <= 0) {
+          clearInterval(decisionTimer);
+          decisionTimer = null;
+          chooseOption('B');
+        }
+      }, 1000);
+    }
+
+    if (state.fase === 'loading') {
+      timer = setTimeout(() => {
+        state.fase = 'scene';
+        render();
+      }, 3500);
+    }
   }
-
-  if (state.fase === 'loading') {
-    timer = setTimeout(() => {
-      state.fase = 'scene';
-      render();
-    }, 3500);
-  }
-}
 
 
   function resetGame() {
@@ -352,6 +383,10 @@ function render() {
     switch (action.dataset.action) {
       case 'start':
         beginGame();
+        break;
+      case 'play-intro':
+        app.querySelector('.intro-video').play();
+        action.hidden = true;
         break;
       case 'enter-scene':
         enterFirstScene();
