@@ -45,6 +45,7 @@ window.FOF_DATA = {
   escenas: [
     {
       numero: 1,
+      tiempo: 20,
       titulo: 'Tráfico urbano',
       pregunta: '¿Qué hacés durante el vuelo?',
       imagen: 'escena1',
@@ -57,6 +58,7 @@ window.FOF_DATA = {
     },
     {
       numero: 2,
+      tiempo: 25,
       titulo: 'Comer mosca',
       pregunta: '¿Qué hacer con la mosca?',
       imagen: 'escena2',
@@ -69,6 +71,7 @@ window.FOF_DATA = {
     },
     {
       numero: 3,
+      tiempo: 15,
       titulo: 'Ataque del hombre loco',
       pregunta: '¿Cómo reaccionás?',
       imagen: 'escena3',
@@ -81,6 +84,7 @@ window.FOF_DATA = {
     },
     {
       numero: 4,
+      tiempo: 30,
       titulo: 'El gato callejero',
       pregunta: '¿Qué hacés con el gato?',
       imagen: 'escena4',
@@ -93,6 +97,7 @@ window.FOF_DATA = {
     },
     {
       numero: 5,
+      tiempo: 30,
       titulo: 'El nido',
       pregunta: '¿Qué vas a hacer?',
       imagen: 'escena5',
@@ -105,6 +110,7 @@ window.FOF_DATA = {
     },
     {
       numero: 6,
+      tiempo: 15,
       titulo: 'La decisión final',
       pregunta: '¿Qué hacer con el pájaro atrapado?',
       imagen: 'escena6',
