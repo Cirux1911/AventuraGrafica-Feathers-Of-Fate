@@ -260,13 +260,27 @@ function tiempoDecision() {
     return state.honor >= -1 ? 'final3' : 'final4';
   }
 
-  function renderFinal() {
-    const ending = data.finales[finalKey()];
-    return screen('final-board', `
-      ${imageMarkup(variantImage(data.imagenes[ending.imagen], ending.variantes), ending.titulo)}
-      <div class="final-actions"><button class="replay-btn" data-action="replay">Volver a jugar</button></div>`,
-      ending.titulo);
-  }
+  
+function renderFinal() {
+  const key = finalKey();
+  const ending = data.finales[key];
+
+  return screen('final-board', `
+    ${imageMarkup(variantImage(data.imagenes[ending.imagen], ending.variantes), ending.titulo)}
+
+    <video class="final-video" src="./assets/animaciones/${key}.mp4"
+      autoplay playsinline preload="auto"></video>
+
+    <button class="play-final-btn" data-action="play-final" hidden>
+      ▶ Reproducir final
+    </button>
+
+    <div class="final-actions" hidden>
+      <button class="replay-btn" data-action="replay">Volver a jugar</button>
+    </div>`,
+    ending.titulo);
+}
+
 
   const screens = {
     menu: renderMenu,
@@ -306,6 +320,26 @@ function tiempoDecision() {
         reproducir.hidden = false;
       });
     }
+
+
+if (state.fase === 'final') {
+  const video = app.querySelector('.final-video');
+  const boton = app.querySelector('.final-actions');
+  const reproducir = app.querySelector('.play-final-btn');
+
+  video.addEventListener('ended', () => {
+    boton.hidden = false;
+  });
+
+  video.addEventListener('error', () => {
+    boton.hidden = false;
+  });
+
+  video.play().catch(() => {
+    reproducir.hidden = false;
+  });
+}
+
 
 
     if (state.fase === 'scene') {
@@ -411,6 +445,11 @@ function tiempoDecision() {
       case 'continue':
         continueFlow();
         break;
+        case 'play-final':
+  app.querySelector('.final-video').play().then(() => {
+    action.hidden = true;
+  }).catch(() => {});
+  break;
       case 'replay':
       case 'home':
         resetGame();
