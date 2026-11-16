@@ -37,6 +37,7 @@
 
   const newGame = () => ({
     honor: 0,
+    piedrazoRecibido: false,
     moscaAliada: false,
     gatoAliado: false,
     pajaritosAliados: false,
@@ -157,12 +158,14 @@ function renderScene() {
   const scene = currentScene();
   let video = `escena${scene.numero}.mp4`;
 
-  // Nodo 3: variante según el Honor acumulado.
-  if (scene.numero === 3) {
-    video = state.honor <= -2
-      ? 'escena3-honor-bajo.mp4'
-      : 'escena3-honor-alto.mp4';
-  }
+// Nodo 3: registrar si la piedra golpeó a la paloma.
+if (scene.numero === 3) {
+  state.piedrazoRecibido = state.honor <= -2;
+
+  video = state.piedrazoRecibido
+    ? 'escena3-honor-bajo.mp4'
+    : 'escena3-honor-alto.mp4';
+}
 
   // Nodo 6: duración según los aliados.
   if (scene.numero === 6) {
@@ -270,7 +273,7 @@ function renderScene() {
 
 
   function renderLoading() {
-    const nombreImagen = `${honorIconState(state.honor)}-${alliesKey()}.png`;
+   const nombreImagen = `${state.piedrazoRecibido ? 'bad' : 'neutral'}-${alliesKey()}.png`;
     const rutaImagen = `${data.loading.carpeta}/${nombreImagen}`;
 
     return screen('loading-board', `
