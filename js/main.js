@@ -154,11 +154,34 @@ function tiempoDecision() {
     }).join('');
   }
 
-  function renderScene() {
-    const scene = currentScene();
 
-    return screen('scene-board', `
+function renderScene() {
+  const scene = currentScene();
+  let video = `escena${scene.numero}.mp4`;
+
+  // Nodo 3: variante según el Honor acumulado.
+  if (scene.numero === 3) {
+    video = state.honor <= -2
+      ? 'escena3-honor-bajo.mp4'
+      : 'escena3-honor-alto.mp4';
+  }
+
+  // Nodo 6: duración según los aliados.
+  if (scene.numero === 6) {
+    video = `escena6-${allies().length}.mp4`;
+  }
+
+  return screen('scene-board', `
     ${imageMarkup(data.imagenes[scene.imagen], scene.titulo)}
+
+    <video class="scene-video"
+      src="./assets/animaciones/${video}"
+      poster="${escapeHTML(data.imagenes[scene.imagen])}"
+      autoplay playsinline preload="auto"></video>
+
+    <button class="play-scene-btn" data-action="play-scene" hidden>
+      ▶ Reproducir escena
+    </button>
 
     <div class="decision-clock">
       Tiempo: <span id="segundos-restantes">${tiempoDecision()}</span>s
@@ -166,7 +189,8 @@ function tiempoDecision() {
 
     <div class="choices">${choiceButtons(scene)}</div>
   `, scene.titulo);
-  }
+}
+
 
   function honorIconState(value) {
     if (value <= HONOR_METER.badMax) return 'bad';
@@ -341,22 +365,59 @@ if (state.fase === 'final') {
 }
 
 
+if (state.fase === 'scene') {
+  const video = app.querySelector('.scene-video');
+  const contador = app.querySelector('#segundos-restantes');
+  const boton = app.querySelector('.play-scene-btn');
+  const limite = tiempoDecision();
 
+  function finalizarTiempo() {
     if (state.fase === 'scene') {
-      let segundos = tiempoDecision();
-      const contador = app.querySelector('#segundos-restantes');
-
-      decisionTimer = setInterval(() => {
-        segundos--;
-        contador.textContent = segundos;
-
-        if (segundos <= 0) {
-          clearInterval(decisionTimer);
-          decisionTimer = null;
-          chooseOption('B');
-        }
-      }, 1000);
+      chooseOption('B');
     }
+  }
+
+  // El reloj sigue el avance real del video.
+  video.addEventListener('timeupdate', () => {
+    if (state.fase !== 'scene') return;
+
+    const restantes = Math.max(0, Math.ceil(limite - video.currentTime));
+    contador.textContent = restantes;
+
+    if (video.currentTime >= limite) {
+      finalizarTiempo();
+    }
+  });
+
+  video.addEventListener('ended', finalizarTiempo);
+
+  // Si falla el video, se mantiene la imagen y el contador.
+  video.addEventListener('error', () => {
+    if (state.fase !== 'scene') return;
+
+    video.hidden = true;
+    boton.hidden = true;
+    let segundos = limite;
+
+    decisionTimer = setInterval(() => {
+      segundos--;
+      contador.textContent = Math.max(0, segundos);
+
+      if (segundos <= 0) {
+        clearInterval(decisionTimer);
+        finalizarTiempo();
+      }
+    }, 1000);
+  });
+
+  // Si el navegador bloquea el autoplay con sonido.
+  video.play().catch(() => {
+    if (state.fase === 'scene' && !video.error) {
+      boton.hidden = false;
+    }
+  });
+}
+
 
     if (state.fase === 'loading') {
       timer = setTimeout(() => {
@@ -442,6 +503,11 @@ if (state.fase === 'final') {
       case 'enter-scene':
         enterFirstScene();
         break;
+        case 'play-scene':
+  app.querySelector('.scene-video').play().then(() => {
+    action.hidden = true;
+  }).catch(() => {});
+  break;
       case 'continue':
         continueFlow();
         break;
