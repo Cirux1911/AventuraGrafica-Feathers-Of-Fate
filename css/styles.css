@@ -185,7 +185,7 @@ button:disabled {
   padding: 16px 18px;
   border: 4px solid #101010;
   border-radius: 999px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.88);
   color: #101010;
   font-weight: 900;
   font-size: clamp(.92rem, 1.4vw, 1.25rem);
@@ -201,6 +201,21 @@ button:disabled {
 .choice-btn:hover {
   background: #fff5c5;
   transform: translate(-50%, calc(-50% - 4px));
+}
+
+.choice-btn[data-option="A"] {
+  left: 20%;
+  top: 32%;
+}
+
+.choice-btn[data-option="B"] {
+  left: 80%;
+  top: 32%;
+}
+
+.choice-btn[data-option="C"] {
+  left: 50%;
+  top: 73%;
 }
 
 .choice-letter {

@@ -144,15 +144,13 @@ function tiempoDecision() {
   }
 
 
-  function choiceButtons(scene) {
-    return scene.opciones.map(option => {
-      const position = scene.hotspot[option.id.toLowerCase()];
-      return `
-        <button class="choice-btn" data-option="${option.id}" style="left:${position.x}%; top:${position.y}%">
-          <span class="choice-letter">${option.id}</span>${escapeHTML(option.texto)}
-        </button>`;
-    }).join('');
-  }
+function choiceButtons(scene) {
+  return scene.opciones.map(option => `
+    <button class="choice-btn" data-option="${option.id}">
+      <span class="choice-letter">${option.id}</span>${escapeHTML(option.texto)}
+    </button>
+  `).join('');
+}
 
 
 function renderScene() {
@@ -183,11 +181,13 @@ function renderScene() {
       ▶ Reproducir escena
     </button>
 
-    <div class="decision-clock">
+    <div class="decision-clock" ${scene.numero === 3 ? 'hidden' : ''}>
       Tiempo: <span id="segundos-restantes">${tiempoDecision()}</span>s
     </div>
 
-    <div class="choices">${choiceButtons(scene)}</div>
+    <div class="choices" ${scene.numero === 3 ? 'hidden' : ''}>
+  ${choiceButtons(scene)}
+</div>
   `, scene.titulo);
 }
 
@@ -369,6 +369,8 @@ if (state.fase === 'scene') {
   const video = app.querySelector('.scene-video');
   const contador = app.querySelector('#segundos-restantes');
   const boton = app.querySelector('.play-scene-btn');
+  const opciones = app.querySelector('.choices');
+  const reloj = app.querySelector('.decision-clock');
   const limite = tiempoDecision();
 
   function finalizarTiempo() {
@@ -377,27 +379,19 @@ if (state.fase === 'scene') {
     }
   }
 
-  // El reloj sigue el avance real del video.
-  video.addEventListener('timeupdate', () => {
-    if (state.fase !== 'scene') return;
-
-    const restantes = Math.max(0, Math.ceil(limite - video.currentTime));
-    contador.textContent = restantes;
-
-    if (video.currentTime >= limite) {
-      finalizarTiempo();
-    }
-  });
-
-  video.addEventListener('ended', finalizarTiempo);
-
-  // Si falla el video, se mantiene la imagen y el contador.
-  video.addEventListener('error', () => {
+  // Muestra la imagen estática y empieza el contador.
+  function mostrarDecisiones() {
     if (state.fase !== 'scene') return;
 
     video.hidden = true;
     boton.hidden = true;
+    opciones.hidden = false;
+    reloj.hidden = false;
+
     let segundos = limite;
+    contador.textContent = segundos;
+
+    clearInterval(decisionTimer);
 
     decisionTimer = setInterval(() => {
       segundos--;
@@ -405,18 +399,44 @@ if (state.fase === 'scene') {
 
       if (segundos <= 0) {
         clearInterval(decisionTimer);
+        decisionTimer = null;
         finalizarTiempo();
       }
     }, 1000);
-  });
+  }
 
-  // Si el navegador bloquea el autoplay con sonido.
+  if (state.escenaActual === 3) {
+    // Nodo 3: primero la animación, después elegir.
+    video.addEventListener('ended', mostrarDecisiones);
+  } else {
+    // Otros nodos: decidir mientras transcurre el video.
+    video.addEventListener('timeupdate', () => {
+      if (state.fase !== 'scene') return;
+
+      const restantes = Math.max(
+        0, Math.ceil(limite - video.currentTime)
+      );
+
+      contador.textContent = restantes;
+
+      if (video.currentTime >= limite) {
+        finalizarTiempo();
+      }
+    });
+
+    video.addEventListener('ended', finalizarTiempo);
+  }
+
+  // Si falla cualquier video, usar la imagen estática.
+  video.addEventListener('error', mostrarDecisiones);
+
   video.play().catch(() => {
     if (state.fase === 'scene' && !video.error) {
       boton.hidden = false;
     }
   });
 }
+
 
 
     if (state.fase === 'loading') {
