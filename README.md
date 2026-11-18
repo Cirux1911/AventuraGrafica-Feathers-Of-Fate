@@ -1,224 +1,81 @@
 # 🕊️ Feathers of Fate
 
-**Feathers of Fate** es un videojuego web de aventura narrativa interactiva basado en decisiones, desarrollado como parte del Proyecto Integrador de Funcionamiento de los Sistemas Digitales y Producción Multimedial.
+**Feathers of Fate** es un videojuego web de aventura narrativa interactiva desarrollado para el Proyecto Integrador de Funcionamiento de los Sistemas Digitales y Producción Multimedial. El jugador acompaña a una paloma que pierde su hogar cuando la municipalidad destruye el árbol donde vivía. Sus decisiones modifican el Honor, las alianzas y el final de la historia.
 
-El jugador controla a una paloma que pierde su hogar debido a la intervención de la municipalidad y debe emprender una aventura por la ciudad para encontrar un nuevo lugar donde vivir.
+## Historia y estructura
 
-Durante su recorrido, deberá tomar decisiones que modificarán su **Honor**, sus relaciones con otros animales y el desenlace de la historia.
+La paloma atraviesa seis nodos de decisión, con tres opciones en cada uno, y puede llegar a cuatro finales principales. En su viaje puede ayudar a otros animales, evitar conflictos o causar problemas en la ciudad.
 
-## 📖 Historia
+| Nodo | Situación | Opciones y efecto en Honor |
+| --- | --- | --- |
+| 1 | Tráfico urbano | A: ensuciar el casco de un motociclista (−2); B: aguantarse (0); C: ensuciar un auto (−1). |
+| 2 | Comer mosca | A: comérsela (0); B: dejarla vivir (+1, mosca aliada); C: arrojarla a una telaraña (−1). |
+| 3 | Ataque del hombre | A: vengarse (−2); B: escapar (0); C: alejar al hombre del tránsito (+1). |
+| 4 | El gato callejero | A: alimentarlo (+1, gato aliado); B: ignorarlo (0); C: robarle la comida (−1). |
+| 5 | El nido | A: expulsar a los pajaritos (−2); B: respetar el nido (+1); C: reforzarlo (+2, pajaritos aliados). |
+| 6 | La decisión final | A: salvar al pájaro (+2); B: abandonarlo (−2); C: alertar a los trabajadores (+1). |
 
-Todo comienza cuando la municipalidad destruye el árbol donde vivía nuestra protagonista, dejándola sin hogar.
+### Honor y consecuencia del nodo 3
 
-Obligada a abandonar su antiguo nido, la paloma emprende una travesía por la ciudad, enfrentándose a diferentes situaciones que pondrán a prueba su comportamiento.
+La partida comienza con **0 puntos de Honor**. Cada decisión suma o resta los puntos indicados y la barra muestra el cambio tras elegir. Al entrar al nodo 3, el Honor acumulado determina cuál de las dos animaciones del piedrazo aparece:
 
-Durante su viaje podrá ayudar a otros animales, conseguir aliados, evitar conflictos o provocar caos en la ciudad.
+- **−2 o menos:** la piedra golpea a la paloma en la cabeza y se registra `piedrazoRecibido`.
+- **−1 o más:** la paloma evita la lesión.
 
-El objetivo principal será encontrar un nuevo hogar, pero el destino de la protagonista dependerá de las decisiones que tome el jugador.
+El golpe es una consecuencia narrativa de las decisiones anteriores; no es otro sistema de puntos. Las pantallas de carga muestran la apariencia herida si recibió el golpe y la apariencia normal en caso contrario. **Tener Honor alto no cambia su aspecto:** si no recibió la piedra, conserva la imagen normal. La lesión permanece registrada aunque el Honor aumente después.
 
-## 🎮 Género y temática
+La decisión final también modifica el Honor **antes** de determinar el desenlace. Las opciones A y C llevan a **Un hogar para todos** con Honor final de +2 o más, o a **Una segunda oportunidad** si es menor. La opción B lleva a **Un hogar vacío** con Honor final de −1 o más, o a **El karma de la paloma** si es menor.
 
-- **Género:** Aventura narrativa interactiva con ramificación de decisiones (*Branching Narrative*).
-- **Temática:** Moralidad animal, humor absurdo y caos urbano.
-- **Plataforma:** Navegador web.
-- **Modalidad:** Un jugador.
-- **Estructura:** Seis nodos de decisión y cuatro finales principales.
+### Aliados y tiempo de decisión
 
-## ⚙️ Mecánicas principales
+La mosca se obtiene al dejarla vivir en el nodo 2, el gato al alimentarlo en el nodo 4 y los pajaritos al reforzar su nido en el nodo 5. Cada alianza se registra de forma independiente del Honor. En el **nodo 6** hay 10 segundos base para decidir y cada aliado conseguido agrega **5 segundos**: el jugador dispone de 10, 15, 20 o 25 segundos. Si el tiempo se agota, se elige automáticamente la opción B.
 
-### Barra de Honor
+Los aliados participan además en la resolución narrativa según la decisión final: pueden colaborar en el rescate o ayudar a alertar a los trabajadores. Si la paloma abandona al pájaro, sus compañeros se quedan para ayudarlo. La cantidad de aliados determina también la variante del video del nodo 6; no cambia por sí sola cuál de los cuatro finales se obtiene.
 
-El juego contará con una variable global numérica llamada `honor`, que representará el comportamiento moral de la paloma.
+## Pantallas y recursos
 
-La protagonista comenzará con **0 puntos de Honor**, y sus decisiones podrán aumentar o disminuir esta puntuación.
+El juego incluye menú de inicio, introducción animada con opción de saltarla, seis escenas con video, pantallas de consecuencias, transiciones de carga y cuatro finales en video. Las pantallas de carga usan **imágenes estáticas** que combinan la apariencia de la paloma tras el nodo 3 y los aliados obtenidos. Se eligió este formato para reducir la cantidad y el peso de las animaciones necesarias.
 
-| Nivel | Puntuación | Descripción |
-|---|---|---|
-| Honor bajo | −2 o menos | Comportamiento egoísta, vengativo o perjudicial. |
-| Honor medio | Entre −1 y +1 | Comportamiento neutral o combinación de buenas y malas acciones. |
-| Honor alto | +2 o más | Comportamiento solidario y respetuoso hacia los demás. |
+Los videos de los nodos 1, 2, 4 y 5 duran aproximadamente 15, 20, 30 y 30 segundos, respectivamente. En el nodo 3 las opciones aparecen **después** de la animación y se dispone de 15 segundos. En el nodo 6 la duración depende de los aliados. El contador y los botones permiten tomar decisiones; las consecuencias muestran el cambio de Honor y, cuando corresponde, el aviso del aliado conseguido.
 
-Las acciones necesarias para sobrevivir no siempre disminuirán el Honor, ya que se diferenciará entre actuar por necesidad y causar daño intencionalmente.
+Las imágenes de carga de honor alto fueron creadas, pero el diseño actual emplea las de honor neutral para una paloma sin lesión y las de honor bajo para una paloma que recibió el golpe. En el código, la carga se elige mediante `piedrazoRecibido` y la combinación de aliados.
 
-**La decisión final también modificará el Honor acumulado y sus puntos se tendrán en cuenta para determinar el desenlace de la aventura.**
+**Recursos pendientes:** imágenes específicas para las consecuencias de las opciones, menú de inicio definitivo y música de fondo para los nodos y finales. El juego ya permite indicar la imagen de cada consecuencia en la propiedad `imagen` de cada opción de `js/story.js`.
 
-### Consecuencia narrativa: Karma
+## Tecnologías y archivos
 
-Dentro de la historia, algunas situaciones podrán desarrollarse de manera diferente según el Honor acumulado.
-
-Por ejemplo, en el tercer nodo, un hombre que cree que la paloma es un robot espía del gobierno le arroja una piedra.
-
-- **Honor bajo (−2 o menos):** La piedra lastima el ojo de la paloma.
-- **Honor medio o alto (−1 o más):** La piedra no le provoca esa lesión.
-
-Esta situación representa el karma como una **consecuencia narrativa de las decisiones anteriores**, sin constituir un sistema o variable independiente.
-
-### Sistema de aliados
-
-A lo largo de la aventura, la paloma podrá establecer relaciones con otros animales.
-
-Los aliados se obtendrán mediante decisiones específicas y serán independientes del Honor acumulado.
-
-| Aliado | Cómo conseguirlo | Participación en la escena final |
-|---|---|---|
-| 🪰 Mosca | Dejarla vivir en el nodo 2. | Distrae a los trabajadores municipales. |
-| 🐈 Gato callejero | Alimentarlo en el nodo 4. | Ayuda a romper la red con sus garras. |
-| 🐦 Pajaritos | Ayudar a reforzar su nido en el nodo 5. | Colaboran en el rescate del pájaro atrapado. |
-
-Si el jugador consigue a los tres aliados, podrá presenciar una variante especial de la escena final en la que todos colaboran.
-
-Si no consigue aliados, la paloma deberá actuar por su cuenta.
-
-Las relaciones con los animales también podrán modificarse dependiendo de la última decisión del jugador.
-
-## 🌳 Estructura narrativa
-
-La historia estará organizada en **seis nodos de decisión**. Cada nodo presentará una situación y tres opciones.
-
-### Nodo 1: Tráfico urbano
-
-La paloma comienza su recorrido por la ciudad después de perder su hogar.
-
-**Decisiones:**
-
-- **A.** Hacer caca sobre el casco de un motociclista. **Honor −2.**
-- **B.** Aguantarse hasta llegar a un lugar seguro. **Honor 0.**
-- **C.** Apuntar a un auto estacionado. **Honor −1.**
-
-### Nodo 2: Comer mosca
-
-La paloma encuentra una mosca mientras busca comida.
-
-**Decisiones:**
-
-- **A.** Comerse la mosca para saciar el hambre. **Honor 0.**
-- **B.** Dejarla vivir y continuar. **Honor +1.** La mosca se convierte en aliada.
-- **C.** Arrojarla hacia una telaraña por diversión. **Honor −1.**
-
-### Nodo 3: Ataque del hombre loco
-
-Un hombre confunde a la paloma con un robot espía del gobierno y le arroja una piedra.
-
-**Decisiones:**
-
-- **A.** Atacar al hombre para vengarse. **Honor −2.**
-- **B.** Escapar volando. **Honor 0.**
-- **C.** Alejar al hombre del tránsito sin lastimarlo. **Honor +1.**
-
-En esta escena también aparece una consecuencia narrativa relacionada con el karma.
-
-### Nodo 4: El gato callejero
-
-La paloma encuentra un gato hambriento y cansado en un callejón.
-
-**Decisiones:**
-
-- **A.** Darle alimento. **Honor +1.** El gato se convierte en aliado.
-- **B.** Ignorarlo y continuar. **Honor 0.**
-- **C.** Robar la comida y huir. **Honor −1.**
-
-### Nodo 5: El nido
-
-La paloma encuentra un nido ocupado por una familia de pajaritos.
-
-**Decisiones:**
-
-- **A.** Expulsar a los pajaritos. **Honor −2.**
-- **B.** Respetar el nido y buscar otro lugar. **Honor +1.**
-- **C.** Ayudar a reforzar el nido. **Honor +2.** Los pajaritos se convierten en aliados.
-
-### Nodo 6: La decisión final
-
-La paloma descubre que la municipalidad está por derribar otro árbol, cerca del cual hay un pequeño pájaro atrapado en una red.
-
-**Decisiones:**
-
-- **A.** Salvar al pájaro directamente. **Honor +2.**
-- **B.** Abandonar al pájaro. **Honor −2.**
-- **C.** Alertar a los trabajadores municipales. **Honor +1.**
-
-Los aliados conseguidos durante la aventura podrán participar en esta escena.
-
-La decisión elegida y el **Honor total**, incluyendo los puntos de la última decisión, determinarán el desenlace.
-
-### Cálculo del desenlace
-
-El Honor final se obtendrá sumando el Honor acumulado durante la aventura y los puntos correspondientes a la última decisión.
-
-**Honor final = Honor acumulado + puntos de la decisión final.**
-
-Por lo tanto, la última decisión podrá cambiar el nivel de Honor de la paloma y modificar el final que obtendrá.
-
-Los aliados conseguidos también influirán en el desarrollo narrativo de cada desenlace, aunque no determinarán por sí solos cuál de los cuatro finales principales se desbloquea.
-
-## 💻 Tecnologías previstas
-
-El videojuego se desarrollará utilizando las siguientes tecnologías web:
-
-- **HTML5:** Estructura y contenido de las pantallas.
-- **CSS3:** Diseño visual, estilos, interfaz y animaciones.
-- **JavaScript:** Lógica de decisiones, actualización del Honor, navegación, aliados y selección de finales.
-
-## 🧩 Funcionamiento previsto
-
-El juego contará con:
-
-- Pantalla de inicio.
-- Introducción narrativa.
-- Seis escenas de decisiones.
-- Pantallas de consecuencias.
-- Barra de Honor.
-- Registro de aliados.
-- Cuatro finales diferentes.
-- Opción para volver al menú una vez el jugador haya terminado el juego.
-
-Cada decisión seguirá la estructura:
-
-**Decisión → Cambio de variables → Consecuencia → Nueva situación.**
-
-## 📁 Estructura prevista del proyecto
-
-La estructura inicial del proyecto podrá organizarse de la siguiente manera:
+- **HTML5:** estructura inicial y carga de scripts.
+- **CSS3:** pantalla completa, interfaz, botones, barra de Honor e indicadores.
+- **JavaScript:** navegación, decisiones, temporizadores, Honor, aliados y selección de finales.
+- **Adobe Flash:** creación de las animaciones en archivos editables `.fla`. Las escenas exportadas a `.mp4` son las que reproduce el navegador. La animación del piedrazo del nodo 3 se utiliza para mostrar la consecuencia según el Honor acumulado.
 
 ```text
 Feathers-of-Fate/
-│
 ├── index.html
 ├── README.md
-│
-├── CSS/
+├── css/
 │   └── styles.css
-│
-├── JS/
-│   ├── main.js
-│   └── story.js
-│
-└── ASSETS/
+├── js/
+│   ├── story.js
+│   └── main.js
+└── assets/
     ├── animaciones/
     └── img/
+        └── cargas/
 ```
 
-Esta estructura es una propuesta inicial y podrá modificarse durante el desarrollo.
+Para jugar localmente, abrir `index.html` en un navegador. Las rutas de imágenes y videos se resuelven desde la raíz del proyecto; los nombres y extensiones deben coincidir con los archivos. Los videos deben estar en un formato reproducible por el navegador.
 
-## 👥 Equipo de desarrollo
+## Equipo y estado del proyecto
 
-**Instituto P-029 "Del Carmen"**
+**Instituto P-029 Del Carmen — 4.º Informática.** PFS de Funcionamiento de los Sistemas Digitales y Producción Multimedial.
 
-**Curso:** 4° Informática
+| Integrante | Aporte en esta etapa |
+| --- | --- |
+| Ciro Griffa | Coordinación, integración de las animaciones de los nodos y cambios de programación para reproducirlas y gestionar las pantallas. |
+| Tomás Cardozo | Animaciones de las escenas de los nodos. |
+| Ramiro Herrera | Revisión del código e incorporación del icono de la pestaña del navegador. |
+| Iván Radoeff | Imágenes estáticas de las pantallas de carga. |
 
-**Proyecto Integrador:** Funcionamiento de los Sistemas Digitales y Producción Multimedial.
+Las responsabilidades se ajustaron durante el desarrollo según las tareas disponibles; el sonido y la música de fondo continúan pendientes. El Sprint 4 presenta recorridos jugables y la consecuencia de la piedra implementada. Antes de la entrega final faltan los recursos señalados y repetir las pruebas completas con ellos integrados.
 
-| Integrante | Responsabilidad principal |
-|---|---|
-| Ciro Griffa | Líder del proyecto |
-| Tomás Cardozo | Diseño visual y sonoro |
-| Ramiro Herrera | Programación |
-| Iván Radoeff | Diseño visual y sonoro |
-
-Todos los integrantes colaborarán en las distintas áreas del proyecto, aunque cada uno tendrá una responsabilidad principal.
-
-## 🚧 Estado del proyecto
-
-**Sprint 4: Trabajando en una versión avanzada jugable.**
-
-Las primeras versiones funcionales ya están listas, con mockups y orden de decisiones listos. Estamos trabajando principalmente en animaciones, imágenes y correcciones de código.  
