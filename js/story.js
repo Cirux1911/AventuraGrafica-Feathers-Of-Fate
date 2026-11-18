@@ -1,7 +1,10 @@
 window.FOF_DATA = {
   imagenes: {
-    menu: './assets/img/menu.png',
-    paloma: './assets/img/paloma.png',
+    menu: './assets/img/menuArbol.png',
+    paloma: './assets/img/menuPigeon1.png',
+    palomaHover: './assets/img/menuPigeon2.png',
+    palomaVuelo: './assets/img/menuVolando.webp',
+    efectoMenu: './assets/img/efectoMenu.png',
     introduccion: './assets/img/intro.png',
     loading: './assets/img/loadingpaloma.png',
     escena1: './assets/img/escena1.png',
@@ -15,7 +18,7 @@ window.FOF_DATA = {
     final3: './assets/img/final3.png',
     final4: './assets/img/final4.png'
   },
-  inicio: { x: 72, y: 52, ancho: 20, alto: 28, palomaEnFondo: false },
+  inicio: { x: 35, y: 25, ancho: 18, alto: 34, palomaEnFondo: false },
   aliados: {
     moscaAliada: {
       id: 'mosca', nombre: 'Mosca', logo: './assets/img/aliadamosca.png',
@@ -49,6 +52,7 @@ window.FOF_DATA = {
       titulo: 'Tráfico urbano',
       pregunta: '¿Qué hacés durante el vuelo?',
       imagen: 'escena1',
+      contexto: 'Después de eso, la paloma se encuentra volando por la ciudad buscando un nuevo hogar y siente ganas de hacer sus necesidades.',
       hotspot: { a: { x: 15, y: 49 }, b: { x: 49, y: 46 }, c: { x: 83, y: 48 } },
       opciones: [
         { id: 'A', texto: 'Hacer caca sobre el casco de un motociclista.', honor: -2, consecuencia: 'La paloma defeca sobre el casco del motociclista y provoca un accidente.' },
@@ -62,6 +66,7 @@ window.FOF_DATA = {
       titulo: 'Comer mosca',
       pregunta: '¿Qué hacer con la mosca?',
       imagen: 'escena2',
+      contexto: 'Después de seguir su camino, la paloma encuentra un tacho de basura. Allí aparece una mosca que empieza a molestarla.',
       hotspot: { a: { x: 18, y: 26 }, b: { x: 76, y: 27 }, c: { x: 51, y: 73 } },
       opciones: [
         { id: 'A', texto: 'Comértela para saciar el hambre.', honor: 0, aliado: 'moscaAliada', valorAliado: false, consecuencia: 'La paloma come y la mosca ya no puede acompañarla.' },
@@ -75,6 +80,7 @@ window.FOF_DATA = {
       titulo: 'Ataque del hombre loco',
       pregunta: '¿Cómo reaccionás?',
       imagen: 'escena3',
+      contexto: 'La paloma aterriza en unos cables de la calle. Un hombre la observa y reacciona de forma extraña...',
       hotspot: { a: { x: 22, y: 36 }, b: { x: 52, y: 76 }, c: { x: 78, y: 35 } },
       opciones: [
         { id: 'A', texto: 'Atacar al hombre para vengarte.', honor: -2, consecuencia: 'La paloma lo ataca y el hombre termina atropellado.' },
@@ -88,6 +94,7 @@ window.FOF_DATA = {
       titulo: 'El gato callejero',
       pregunta: '¿Qué hacés con el gato?',
       imagen: 'escena4',
+      contexto: 'Más adelante, la paloma encuentra un gato hambriento cerca de un tacho. También ve comida cerca suyo.',
       hotspot: { a: { x: 33, y: 29 }, b: { x: 77, y: 26 }, c: { x: 52, y: 72 } },
       opciones: [
         { id: 'A', texto: 'Darle alimento al gato.', honor: 1, aliado: 'gatoAliado', valorAliado: true, consecuencia: 'El gato come y se convierte en aliado.' },
@@ -101,6 +108,7 @@ window.FOF_DATA = {
       titulo: 'El nido',
       pregunta: '¿Qué vas a hacer?',
       imagen: 'escena5',
+      contexto: 'La paloma sigue camino, y encuentra un árbol con un nido donde pensó que podría quedarse. Pero lo que había en el nido le sorprendió.',
       hotspot: { a: { x: 16, y: 44 }, b: { x: 67, y: 44 }, c: { x: 41, y: 77 } },
       opciones: [
         { id: 'A', texto: 'Expulsar a los pajaritos y quedarse con el nido.', honor: -2, aliado: 'pajaritosAliados', valorAliado: false, consecuencia: 'El nido cae, se destruye y los pajaritos no se vuelven aliados.' },
@@ -114,6 +122,7 @@ window.FOF_DATA = {
       titulo: 'La decisión final',
       pregunta: '¿Qué hacer con el pájaro atrapado?',
       imagen: 'escena6',
+      contexto: 'Al final del recorrido, la paloma descubre una situación de peligro. Otro pájaro está atrapado mientras unos trabajadores se acercan al árbol.',
       hotspot: { a: { x: 25, y: 43 }, b: { x: 79, y: 42 }, c: { x: 48, y: 79 } },
       opciones: [
         { id: 'A', texto: 'Salvar al pájaro.', honor: 2, consecuencia: 'La paloma se arriesga para salvar al pájaro atrapado.' },

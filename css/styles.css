@@ -82,16 +82,16 @@ button:disabled {
 
 .title-side {
   position: absolute;
-  left: 6%;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 4%;
+  top: 6%;
+  transform: none;
   z-index: 2;
-  max-width: 46%;
+  max-width: 30%;
 }
 
 .game-title {
   margin: 0;
-  font-size: clamp(3rem, 7vw, 6.6rem);
+  font-size: clamp(2rem, 4.3vw, 4.2rem);
   line-height: .94;
   letter-spacing: -.05em;
   color: #163248;
@@ -99,8 +99,8 @@ button:disabled {
 }
 
 .start-hint {
-  margin-top: 20px;
-  font-size: clamp(1rem, 2vw, 1.3rem);
+  margin-top: 10px;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
   font-weight: 800;
   color: #295064;
 }
@@ -684,4 +684,143 @@ button:disabled {
   background: #ffdb69;
   font-size: 18px;
   font-weight: bold;
+}
+
+
+/* Pantallas de contexto antes de cada nodo */
+
+.briefing-board {
+  background: #000;
+  color: #fff;
+}
+
+.briefing-box {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 25px;
+  padding: 30px;
+}
+
+.briefing-box h2 {
+  font-size: clamp(28px, 4vw, 48px);
+  margin: 0;
+}
+
+.briefing-box p {
+  max-width: 850px;
+  font-size: clamp(17px, 2vw, 25px);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.briefing-btn {
+  padding: 14px 32px;
+  background: #111;
+  color: white;
+  border: 2px solid white;
+  border-radius: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.briefing-btn:hover {
+  background: #333;
+}
+
+
+/* Transiciones suaves entre pantallas */
+
+#app {
+  background: #000;
+}
+
+.screen-fade {
+  animation: aparecerPantalla 0.45s ease-out both;
+}
+
+@keyframes aparecerPantalla {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-fade {
+    animation: none;
+  }
+}
+
+/* Nuevo menú animado */
+
+.pigeon-hotspot {
+  overflow: visible;
+}
+
+.menu-pigeon {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.menu-pigeon-hover {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.pigeon-hotspot:not(:disabled):hover .menu-pigeon-hover {
+  opacity: 1;
+}
+
+/* Resplandor amarillo de Tomi */
+.menu-effect {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.55);
+  filter: blur(9px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1;
+}
+
+.pigeon-hotspot:not(:disabled):hover .menu-effect {
+  opacity: 0.28;
+}
+
+/* Movimiento de despegue */
+.menu-board.flying .menu-pigeon {
+  animation: volarMenu 1.1s ease-in forwards;
+}
+
+.menu-board.flying .menu-effect {
+  opacity: 0;
+}
+
+@keyframes volarMenu {
+  0%, 18% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-120%, -180%) scale(0.6);
+    opacity: 0;
+  }
 }

@@ -81,7 +81,7 @@ function tiempoDecision() {
 
   function screen(boardClass, content, title = '') {
     return `
-      <section class="screen">
+     <section class="screen ${state.fase === 'briefing' ? 'screen-fade' : ''}">
         ${homeButton()}
         ${title ? titleFlash(title) : ''}
         <div class="artboard ${boardClass}">
@@ -104,23 +104,36 @@ function tiempoDecision() {
   }
 
   // Pantallas del juego.
-  function renderMenu() {
-    const start = data.inicio;
-    const hasPigeon = data.imagenes.paloma || start.palomaEnFondo;
-    return screen(`menu-board ${state.menuFlying ? 'flying' : ''}`, `
-      ${imageMarkup(data.imagenes.menu, 'Pantalla de inicio de Feathers of Fate')}
-      <div class="title-side">
-        <h1 class="game-title">Feathers<br>of Fate</h1>
-        <div class="start-hint">${hasPigeon ? 'Tocá la paloma para comenzar' : 'Comenzá tu aventura'}</div>
-      </div>
-      <button class="pigeon-hotspot ${hasPigeon ? 'pigeon-art' : ''}" data-action="start"
-        style="left:${start.x}%;top:${start.y}%;width:${start.ancho}%;height:${start.alto}%"
-        aria-label="Comenzar la aventura" ${state.menuFlying ? 'disabled' : ''}>
-        ${imageMarkup(data.imagenes.paloma, '', 'menu-pigeon')}
-        ${hasPigeon ? '' : '<span class="start-label">Comenzar</span>'}
-      </button>
-      ${state.menuFlying ? animationMarkup('inicio') : ''}`);
-  }
+ 
+function renderMenu() {
+  const start = data.inicio;
+
+  return screen(`menu-board ${state.menuFlying ? 'flying' : ''}`, `
+    ${imageMarkup(data.imagenes.menu, 'Menú de Feathers of Fate')}
+
+    <div class="title-side">
+      <h1 class="game-title">Feathers<br>of Fate</h1>
+      <div class="start-hint">Tocá la paloma para comenzar</div>
+    </div>
+
+    <button class="pigeon-hotspot pigeon-art"
+      data-action="start"
+      style="left:${start.x}%;top:${start.y}%;width:${start.ancho}%;height:${start.alto}%"
+      aria-label="Comenzar la aventura"
+      ${state.menuFlying ? 'disabled' : ''}>
+
+      ${imageMarkup(data.imagenes.efectoMenu, '', 'menu-effect')}
+
+      <img class="menu-pigeon"
+        src="${escapeHTML(state.menuFlying ? data.imagenes.palomaVuelo : data.imagenes.paloma)}"
+        alt="Paloma">
+
+      ${state.menuFlying ? '' : imageMarkup(data.imagenes.palomaHover, '', 'menu-pigeon menu-pigeon-hover')}
+
+    </button>
+  `);
+}
+
 
 
   function renderIntro() {
@@ -151,6 +164,21 @@ function choiceButtons(scene) {
       <span class="choice-letter">${option.id}</span>${escapeHTML(option.texto)}
     </button>
   `).join('');
+}
+
+
+function renderBriefing() {
+  const scene = currentScene();
+
+  return screen('briefing-board', `
+    <div class="briefing-box">
+      <h2>${escapeHTML(scene.titulo)}</h2>
+      <p>${escapeHTML(scene.contexto || '')}</p>
+      <button class="briefing-btn" data-action="start-scene">
+        Continuar
+      </button>
+    </div>
+  `);
 }
 
 
@@ -312,6 +340,7 @@ function renderFinal() {
   const screens = {
     menu: renderMenu,
     intro: renderIntro,
+    briefing: renderBriefing,
     scene: renderScene,
     result: renderResult,
     loading: renderLoading,
@@ -442,39 +471,38 @@ if (state.fase === 'scene') {
 
 
 
-    if (state.fase === 'loading') {
-      timer = setTimeout(() => {
-        state.fase = 'scene';
-        render();
-      }, 3500);
-    }
-  }
-
+if (state.fase === 'loading') {
+  timer = setTimeout(() => {
+    state.fase = 'briefing';
+    render();
+  }, 3500);
+}
+}
 
   function resetGame() {
     state = newGame();
     render();
   }
 
-  function beginGame() {
-    if (state.fase !== 'menu' || state.menuFlying) return;
-    state.menuFlying = true;
-    render();
+function beginGame() {
+  if (state.fase !== 'menu' || state.menuFlying) return;
 
-    const animation = data.animacionPersonaje;
-    timer = setTimeout(() => {
-      state.menuFlying = false;
-      state.fase = 'intro';
-      render();
-    }, animation.src && animation.pantalla === 'inicio' ? animation.duracionMs : 750);
-  }
+  state.menuFlying = true;
+  render();
 
-  function enterFirstScene() {
-    if (state.fase !== 'intro') return;
-    state.escenaActual = 1;
-    state.fase = 'scene';
+  timer = setTimeout(() => {
+    state.menuFlying = false;
+    state.fase = 'intro';
     render();
-  }
+  }, 1100);
+}
+
+function enterFirstScene() {
+  if (state.fase !== 'intro') return;
+  state.escenaActual = 1;
+  state.fase = 'briefing';
+  render();
+}
 
   function chooseOption(optionId) {
     if (state.fase !== 'scene') return;
@@ -530,6 +558,10 @@ if (state.fase === 'scene') {
   app.querySelector('.scene-video').play().then(() => {
     action.hidden = true;
   }).catch(() => {});
+  break;
+  case 'start-scene':
+  state.fase = 'scene';
+  render();
   break;
       case 'continue':
         continueFlow();
