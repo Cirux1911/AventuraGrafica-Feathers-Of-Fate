@@ -285,11 +285,19 @@ if (scene.numero === 3) {
     return companions.length === 3 ? text + ' Los tres colaboran juntos.' : text;
   }
 
+  function resultImage() {
+    const option = state.ultimaOpcion;
+    const variant = variantImage(option.imagen, option.variantes);
+    const src = typeof variant === 'object' && variant
+      ? variant[state.piedrazoRecibido ? 'herida' : 'normal']
+      : (state.piedrazoRecibido && option.imagenHerida) || variant;
+    return src ? `${data.consecuencias.carpeta}/${src}` : '';
+  }
+
   function renderResult() {
     const scene = currentScene();
-    const option = state.ultimaOpcion;
     return screen('result-board', `
-      ${imageMarkup(variantImage(option.imagen, option.variantes), `Consecuencia de ${scene.titulo}`)}
+      ${imageMarkup(resultImage(), `Consecuencia de ${scene.titulo}`)}
       <div class="result-footer">
         <div class="result-panel">
           <p class="result-text">${escapeHTML(resultText())}</p>

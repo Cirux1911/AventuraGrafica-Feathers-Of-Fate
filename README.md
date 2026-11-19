@@ -10,7 +10,7 @@ La paloma atraviesa seis nodos de decisión, con tres opciones en cada uno, y pu
 | --- | --- | --- |
 | 1 | Tráfico urbano | A: ensuciar el casco de un motociclista (−2); B: aguantarse (0); C: ensuciar un auto (−1). |
 | 2 | Comer mosca | A: comérsela (0); B: dejarla vivir (+1, mosca aliada); C: arrojarla a una telaraña (−1). |
-| 3 | Ataque del hombre | A: vengarse (−2); B: escapar (0); C: alejar al hombre del tránsito (+1). |
+| 3 | Ataque del hombre | A: vengarse (−2); B: escapar (0); C: hacerle caca en la cabeza (−1). |
 | 4 | El gato callejero | A: alimentarlo (+1, gato aliado); B: ignorarlo (0); C: robarle la comida (−1). |
 | 5 | El nido | A: expulsar a los pajaritos (−2); B: respetar el nido (+1); C: reforzarlo (+2, pajaritos aliados). |
 | 6 | La decisión final | A: salvar al pájaro (+2); B: abandonarlo (−2); C: alertar a los trabajadores (+1). |
@@ -79,3 +79,32 @@ Para jugar localmente, abrir `index.html` en un navegador. Las rutas de imágene
 
 Las responsabilidades se ajustaron durante el desarrollo según las tareas disponibles; el sonido y la música de fondo continúan pendientes. El Sprint 4 presenta recorridos jugables y la consecuencia de la piedra implementada. Antes de la entrega final faltan los recursos señalados y repetir las pruebas completas con ellos integrados.
 
+
+
+## Incorporar imágenes de consecuencias
+
+Copiar los PNG (sin la carpeta contenedora del ZIP) dentro de `assets/img/consecuencias/`. Las rutas ya están preparadas en `js/story.js`; no hace falta editar `main.js` para agregar las imágenes.
+
+- `imagen`: nombre del PNG de cada opción en los nodos 1 a 5.
+- `imagenHerida`: variante del nodo 3 si la piedra golpeó a la paloma. La opción C usa una sola imagen del hombre.
+- `variantes`: en cada opción del nodo 6, los ocho grupos posibles de aliados, con imagen `normal` y `herida`. Los archivos llamados “alto” se usan sin lesión y los llamados “bajo” con lesión, independientemente del Honor actual.
+- `consecuencias.carpeta`: ruta común a todas estas imágenes.
+
+Se conservan los nombres del ZIP de PNG corregidos, incluidos los espacios y `_Mesa de trabajo 1`. Para las ocho variantes nuevas se usan los nombres acordados, sin ese sufijo:
+
+```text
+Nodo 6. Ayudar g alto.png
+Nodo 6. Ayudar g bajo.png
+Nodo 6. Ayudar m alto.png
+Nodo 6. Ayudar m bajo.png
+Nodo 6. Ayudar todos alto.png
+Nodo 6. Ayudar todos bajo.png
+Nodo 6 Huir todos alto.png
+Nodo 6 Huir todos bajo.png
+```
+
+La ruta de “Ayudar p y g bajo” conserva `najo` porque así se llama el PNG recibido. Si se corrige ese nombre, actualizar también la ruta correspondiente en `story.js`. No se necesitan los tres archivos generales “ocultar animales” ni `Nodo 3 terminar` para mostrar las consecuencias.
+
+Si una imagen todavía no está copiada, el texto, la barra de Honor y el botón para continuar siguen disponibles. Los PNG no se incluyen en esta entrega de código; la carpeta queda preparada para agregarlos.
+
+La opción C del nodo 3 ahora es “Hacerle caca en la cabeza”, resta 1 punto de Honor y muestra su nueva consecuencia textual.

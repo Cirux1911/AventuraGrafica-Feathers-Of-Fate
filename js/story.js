@@ -18,6 +18,8 @@ window.FOF_DATA = {
     final3: './assets/img/final3.png',
     final4: './assets/img/final4.png'
   },
+  // Copiar los PNG de consecuencias en esta carpeta; los nombres se indican en cada opción.
+  consecuencias: { carpeta: './assets/img/consecuencias' },
   inicio: { x: 35, y: 25, ancho: 18, alto: 34, palomaEnFondo: false },
   aliados: {
     moscaAliada: {
@@ -55,9 +57,9 @@ window.FOF_DATA = {
       contexto: 'Después de eso, la paloma se encuentra volando por la ciudad buscando un nuevo hogar y siente ganas de hacer sus necesidades.',
       hotspot: { a: { x: 15, y: 49 }, b: { x: 49, y: 46 }, c: { x: 83, y: 48 } },
       opciones: [
-        { id: 'A', texto: 'Hacer caca sobre el casco de un motociclista.', honor: -2, consecuencia: 'La paloma defeca sobre el casco del motociclista y provoca un accidente.' },
-        { id: 'B', texto: 'Aguantarse hasta llegar a un lugar seguro.', honor: 0, consecuencia: 'La paloma sigue volando y no perjudica a nadie.' },
-        { id: 'C', texto: 'Apuntar a un auto estacionado.', honor: -1, consecuencia: 'La paloma ensucia el auto y enfurece a su dueño.' }
+        { id: 'A', texto: 'Hacer caca sobre el casco de un motociclista.', honor: -2, imagen: 'Nodo 1-moto_Mesa de trabajo 1.png', consecuencia: 'La paloma defeca sobre el casco del motociclista y provoca un accidente.' },
+        { id: 'B', texto: 'Aguantarse hasta llegar a un lugar seguro.', honor: 0, imagen: 'Nodo 1 arbol_Mesa de trabajo 1.png', consecuencia: 'La paloma sigue volando y no perjudica a nadie.' },
+        { id: 'C', texto: 'Apuntar a un auto estacionado.', honor: -1, imagen: 'Nodo 1- auto_Mesa de trabajo 1.png', consecuencia: 'La paloma ensucia el auto y enfurece a su dueño.' }
       ]
     },
     {
@@ -69,9 +71,9 @@ window.FOF_DATA = {
       contexto: 'Después de seguir su camino, la paloma encuentra un tacho de basura. Allí aparece una mosca que empieza a molestarla.',
       hotspot: { a: { x: 18, y: 26 }, b: { x: 76, y: 27 }, c: { x: 51, y: 73 } },
       opciones: [
-        { id: 'A', texto: 'Comértela para saciar el hambre.', honor: 0, aliado: 'moscaAliada', valorAliado: false, consecuencia: 'La paloma come y la mosca ya no puede acompañarla.' },
-        { id: 'B', texto: 'Dejarla vivir y seguir tu camino.', honor: 1, aliado: 'moscaAliada', valorAliado: true, consecuencia: 'La mosca sobrevive y decide acompañar a la paloma.' },
-        { id: 'C', texto: 'Perseguirla y arrojarla hacia una telaraña.', honor: -1, aliado: 'moscaAliada', valorAliado: false, consecuencia: 'La mosca queda en peligro por diversión.' }
+        { id: 'A', texto: 'Comértela para saciar el hambre.', honor: 0, aliado: 'moscaAliada', valorAliado: false, imagen: 'Nodo 2 comerse la mosca_Mesa de trabajo 1.png', consecuencia: 'La paloma come y la mosca ya no puede acompañarla.' },
+        { id: 'B', texto: 'Dejarla vivir y seguir tu camino.', honor: 1, aliado: 'moscaAliada', valorAliado: true, imagen: 'Nodo 2 ignorar e irse_Mesa de trabajo 1.png', consecuencia: 'La mosca sobrevive y decide acompañar a la paloma.' },
+        { id: 'C', texto: 'Perseguirla y arrojarla hacia una telaraña.', honor: -1, aliado: 'moscaAliada', valorAliado: false, imagen: 'Nodo 2 llevarala hacia una telaraña_Mesa de trabajo 1.png', consecuencia: 'La mosca queda en peligro por diversión.' }
       ]
     },
     {
@@ -83,9 +85,9 @@ window.FOF_DATA = {
       contexto: 'La paloma aterriza en unos cables de la calle. Un hombre la observa y reacciona de forma extraña...',
       hotspot: { a: { x: 22, y: 36 }, b: { x: 52, y: 76 }, c: { x: 78, y: 35 } },
       opciones: [
-        { id: 'A', texto: 'Atacar al hombre para vengarte.', honor: -2, consecuencia: 'La paloma lo ataca y el hombre termina atropellado.' },
-        { id: 'B', texto: 'Escapar volando del lugar.', honor: 0, consecuencia: 'La paloma evita que la situación empeore y escapa.' },
-        { id: 'C', texto: 'Alejarlo del tránsito sin lastimarlo.', honor: 1, consecuencia: 'La paloma consigue salvarlo sin herirlo.' }
+        { id: 'A', texto: 'Atacar al hombre para vengarte.', honor: -2, imagen: 'Nodo 3 atacar_Mesa de trabajo 1.png', imagenHerida: 'Nodo 3 atacar lastimado_Mesa de trabajo 1.png', consecuencia: 'La paloma lo ataca y el hombre termina atropellado.' },
+        { id: 'B', texto: 'Escapar volando del lugar.', honor: 0, imagen: 'Nodo 3 ignorar e irse_Mesa de trabajo 1.png', imagenHerida: 'Nodo 3 ignorar e irse lastimado_Mesa de trabajo 1.png', consecuencia: 'La paloma evita que la situación empeore y escapa.' },
+        { id: 'C', texto: 'Hacerle caca en la cabeza.', honor: -1, imagen: 'Nodo 3 Hacer caca_Mesa de trabajo 1.png', consecuencia: 'La paloma le hace caca en la cabeza al hombre como venganza.' }
       ]
     },
     {
@@ -97,9 +99,9 @@ window.FOF_DATA = {
       contexto: 'Más adelante, la paloma encuentra un gato hambriento cerca de un tacho. También ve comida cerca suyo.',
       hotspot: { a: { x: 33, y: 29 }, b: { x: 77, y: 26 }, c: { x: 52, y: 72 } },
       opciones: [
-        { id: 'A', texto: 'Darle alimento al gato.', honor: 1, aliado: 'gatoAliado', valorAliado: true, consecuencia: 'El gato come y se convierte en aliado.' },
-        { id: 'B', texto: 'Seguir tu camino e ignorarlo.', honor: 0, aliado: 'gatoAliado', valorAliado: false, consecuencia: 'La paloma sigue sola y el gato no la acompaña.' },
-        { id: 'C', texto: 'Robar la comida y huir.', honor: -1, aliado: 'gatoAliado', valorAliado: false, consecuencia: 'La paloma le roba la comida y el gato desconfía.' }
+        { id: 'A', texto: 'Darle alimento al gato.', honor: 1, aliado: 'gatoAliado', valorAliado: true, imagen: 'Nodo 4 acercar la comida_Mesa de trabajo 1.png', consecuencia: 'El gato come y se convierte en aliado.' },
+        { id: 'B', texto: 'Seguir tu camino e ignorarlo.', honor: 0, aliado: 'gatoAliado', valorAliado: false, imagen: 'Nodo 4 ignorar_Mesa de trabajo 1.png', consecuencia: 'La paloma sigue sola y el gato no la acompaña.' },
+        { id: 'C', texto: 'Robar la comida y huir.', honor: -1, aliado: 'gatoAliado', valorAliado: false, imagen: 'Nodo 4 comerse su comida_Mesa de trabajo 1.png', consecuencia: 'La paloma le roba la comida y el gato desconfía.' }
       ]
     },
     {
@@ -111,9 +113,9 @@ window.FOF_DATA = {
       contexto: 'La paloma sigue camino, y encuentra un árbol con un nido donde pensó que podría quedarse. Pero lo que había en el nido le sorprendió.',
       hotspot: { a: { x: 16, y: 44 }, b: { x: 67, y: 44 }, c: { x: 41, y: 77 } },
       opciones: [
-        { id: 'A', texto: 'Expulsar a los pajaritos y quedarse con el nido.', honor: -2, aliado: 'pajaritosAliados', valorAliado: false, consecuencia: 'El nido cae, se destruye y los pajaritos no se vuelven aliados.' },
-        { id: 'B', texto: 'Respetar el nido y buscar otro lugar.', honor: 1, aliado: 'pajaritosAliados', valorAliado: false, consecuencia: 'La paloma sigue su viaje sin molestar a la familia.' },
-        { id: 'C', texto: 'Ayudar a reforzar el nido.', honor: 2, aliado: 'pajaritosAliados', valorAliado: true, consecuencia: 'Los pajaritos agradecen la ayuda y se vuelven aliados.' }
+        { id: 'A', texto: 'Expulsar a los pajaritos y quedarse con el nido.', honor: -2, aliado: 'pajaritosAliados', valorAliado: false, imagen: 'Nodo 5- hechar pajaros del nido_Mesa de trabajo 1.png', consecuencia: 'El nido cae, se destruye y los pajaritos no se vuelven aliados.' },
+        { id: 'B', texto: 'Respetar el nido y buscar otro lugar.', honor: 1, aliado: 'pajaritosAliados', valorAliado: false, imagen: 'Nodo 5- dejar nido en paz_Mesa de trabajo 1.png', consecuencia: 'La paloma sigue su viaje sin molestar a la familia.' },
+        { id: 'C', texto: 'Ayudar a reforzar el nido.', honor: 2, aliado: 'pajaritosAliados', valorAliado: true, imagen: 'Nodo 5- ayudar al nido_Mesa de trabajo 1.png', consecuencia: 'Los pajaritos agradecen la ayuda y se vuelven aliados.' }
       ]
     },
     {
@@ -125,9 +127,45 @@ window.FOF_DATA = {
       contexto: 'Al final del recorrido, la paloma descubre una situación de peligro. Otro pájaro está atrapado mientras unos trabajadores se acercan al árbol.',
       hotspot: { a: { x: 25, y: 43 }, b: { x: 79, y: 42 }, c: { x: 48, y: 79 } },
       opciones: [
-        { id: 'A', texto: 'Salvar al pájaro.', honor: 2, consecuencia: 'La paloma se arriesga para salvar al pájaro atrapado.' },
-        { id: 'B', texto: 'Abandonar.', honor: -2, consecuencia: 'La paloma lo abandona y sigue su camino.' },
-        { id: 'C', texto: 'Alertar a los trabajadores.', honor: 1, consecuencia: 'Los trabajadores descubren al pájaro y frenan la tala.' }
+        { id: 'A', texto: 'Salvar al pájaro.', honor: 2, consecuencia: 'La paloma se arriesga para salvar al pájaro atrapado.',
+        // normal = archivo alto; herida = archivo bajo, según el piedrazo del nodo 3.
+        variantes: {
+          'ninguno': { normal: 'Nodo 6_Mesa de trabajo 1. Ayudar solo Alto.png', herida: 'Nodo 6_Mesa de trabajo 1. Ayudar solo bajo.png' },
+          'mosca': { normal: 'Nodo 6. Ayudar m alto.png', herida: 'Nodo 6. Ayudar m bajo.png' },
+          'gato': { normal: 'Nodo 6. Ayudar g alto.png', herida: 'Nodo 6. Ayudar g bajo.png' },
+          'pajaritos': { normal: 'Nodo 6_Mesa de trabajo 1. Ayudar p alto.png', herida: 'Nodo 6_Mesa de trabajo 1. Ayudar p bajo.png' },
+          'mosca-gato': { normal: 'Nodo 6_Mesa de trabajo 1. Ayudar m y g alto.png', herida: 'Nodo 6_Mesa de trabajo 1. Ayudar m y g bajo.png' },
+          'mosca-pajaritos': { normal: 'Nodo 6_Mesa de trabajo 1. Ayudar p y m alto.png', herida: 'Nodo 6_Mesa de trabajo 1. Ayudar p y m bajo.png' },
+          'gato-pajaritos': { normal: 'Nodo 6_Mesa de trabajo 1. Ayudar p y g alto.png', herida: 'Nodo 6_Mesa de trabajo 1. Ayudar p y g najo.png' },
+          'mosca-gato-pajaritos': { normal: 'Nodo 6. Ayudar todos alto.png', herida: 'Nodo 6. Ayudar todos bajo.png' }
+        }
+        },
+        { id: 'B', texto: 'Abandonar.', honor: -2, consecuencia: 'La paloma lo abandona y sigue su camino.',
+        // normal = archivo alto; herida = archivo bajo, según el piedrazo del nodo 3.
+        variantes: {
+          'ninguno': { normal: 'Nodo 6 Huir solo alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir solo bajo_Mesa de trabajo 1.png' },
+          'mosca': { normal: 'Nodo 6 Huir m alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir m bajo_Mesa de trabajo 1.png' },
+          'gato': { normal: 'Nodo 6 Huir g alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir g bajo_Mesa de trabajo 1.png' },
+          'pajaritos': { normal: 'Nodo 6 Huir p alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir p bajo_Mesa de trabajo 1.png' },
+          'mosca-gato': { normal: 'Nodo 6 Huir m y g alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir m y g bajo_Mesa de trabajo 1.png' },
+          'mosca-pajaritos': { normal: 'Nodo 6 Huir p y m alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir p y m bajo_Mesa de trabajo 1.png' },
+          'gato-pajaritos': { normal: 'Nodo 6 Huir p y g alto_Mesa de trabajo 1.png', herida: 'Nodo 6 Huir p y g bajo_Mesa de trabajo 1.png' },
+          'mosca-gato-pajaritos': { normal: 'Nodo 6 Huir todos alto.png', herida: 'Nodo 6 Huir todos bajo.png' }
+        }
+        },
+        { id: 'C', texto: 'Alertar a los trabajadores.', honor: 1, consecuencia: 'Los trabajadores descubren al pájaro y frenan la tala.',
+        // normal = archivo alto; herida = archivo bajo, según el piedrazo del nodo 3.
+        variantes: {
+          'ninguno': { normal: 'Nodo 6  Alertar solo alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar solo bajo_Mesa de trabajo 1.png' },
+          'mosca': { normal: 'Nodo 6  Alertar m alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar m bajo_Mesa de trabajo 1.png' },
+          'gato': { normal: 'Nodo 6  Alertar g alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar g bajo_Mesa de trabajo 1.png' },
+          'pajaritos': { normal: 'Nodo 6  Alertar p alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar p bajo_Mesa de trabajo 1.png' },
+          'mosca-gato': { normal: 'Nodo 6  Alertar m y g alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar m y g bajo_Mesa de trabajo 1.png' },
+          'mosca-pajaritos': { normal: 'Nodo 6  Alertar p y m alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar p y m bajo_Mesa de trabajo 1.png' },
+          'gato-pajaritos': { normal: 'Nodo 6  Alertar p y g alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar p y g bajo_Mesa de trabajo 1.png' },
+          'mosca-gato-pajaritos': { normal: 'Nodo 6  Alertar todos alto_Mesa de trabajo 1.png', herida: 'Nodo 6  Alertar todos bajo_Mesa de trabajo 1.png' }
+        }
+        }
       ]
     }
   ],
