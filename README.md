@@ -107,4 +107,4 @@ La ruta de “Ayudar p y g bajo” conserva `najo` porque así se llama el PNG r
 
 Si una imagen todavía no está copiada, el texto, la barra de Honor y el botón para continuar siguen disponibles. Los PNG no se incluyen en esta entrega de código; la carpeta queda preparada para agregarlos.
 
-La opción C del nodo 3 ahora es “Hacerle caca en la cabeza”, resta 1 punto de Honor y muestra su nueva consecuencia textual.
+La opción C del nodo 3 ahora es “Hacerle caca en la cabeza”, resta 1 punto de Honor y muestra su nueva consecuencia textual. 
